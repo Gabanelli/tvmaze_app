@@ -18,4 +18,25 @@ class Show {
     this.imageUrl,
     this.isFavorite,
   );
+
+  Show copyWith({
+    int? id,
+    String? name,
+    List<String>? genres,
+    DateTime? premiered,
+    DateTime? ended,
+    String? summary,
+    String? imageUrl,
+    bool? isFavorite,
+  }) =>
+      Show(
+        id ?? this.id,
+        name ?? this.name,
+        genres ?? this.genres,
+        premiered ?? this.premiered,
+        ended ?? this.ended,
+        summary ?? this.summary,
+        imageUrl ?? this.imageUrl,
+        isFavorite ?? this.isFavorite,
+      );
 }

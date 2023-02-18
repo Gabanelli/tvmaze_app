@@ -6,3 +6,7 @@ abstract class Failure {
 class ApiFailure extends Failure {
   ApiFailure(super.message);
 }
+
+class InternalFailure extends Failure {
+  InternalFailure(super.message);
+}

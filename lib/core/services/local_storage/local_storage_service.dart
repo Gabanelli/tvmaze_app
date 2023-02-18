@@ -12,6 +12,11 @@ class LocalStorageService {
     return ids != null ? Set.from(ids) : {};
   }
 
+  Future<void> setFavoriteIds(Set<int> ids) {
+    return _getStorage.write(
+        LocalStorageKey.favoriteShowIds.name, ids.toList());
+  }
+
   void toggleFavorite(int showId) {
     final ids = getFavoriteIds();
     if (ids.contains(showId)) {

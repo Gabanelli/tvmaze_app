@@ -3,5 +3,5 @@ abstract class TvMazeConfig {
 
   static const search = '$_baseUrl/search/shows';
   static const shows = '$_baseUrl/shows';
-  static String episodes(String showId) => '$_baseUrl/shows/$showId/episodes';
+  static String episodes(int showId) => '$_baseUrl/shows/$showId/episodes';
 }

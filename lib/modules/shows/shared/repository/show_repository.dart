@@ -7,5 +7,5 @@ abstract class ShowRepository {
   Future<Either<Failure, IList<Show>>> getShows(int page);
   Future<Either<Failure, IList<Episode>>> getEpisodesFromShow(int showId);
   Future<Either<Failure, IList<Show>>> toggleFavoriteShow(
-      int showId, bool isFavorite);
+      IList<Show> shows, int showId);
 }

@@ -5,6 +5,7 @@ class TvMazeShow {
   final DateTime premiered;
   final DateTime? ended;
   final String summary;
+  final TvMazeShowImage image;
 
   const TvMazeShow(
     this.id,
@@ -13,5 +14,13 @@ class TvMazeShow {
     this.premiered,
     this.ended,
     this.summary,
+    this.image,
   );
+}
+
+class TvMazeShowImage {
+  final String medium;
+  final String original;
+
+  const TvMazeShowImage(this.medium, this.original);
 }
