@@ -1,4 +1,4 @@
-package com.example.tvmaze_app
+package com.gabanelli.tvmaze_app
 
 import io.flutter.embedding.android.FlutterActivity
 
