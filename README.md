@@ -1,6 +1,8 @@
 # TV Maze App
 
-App that displays shows using [Tv Maze API](https://www.tvmaze.com/api)
+App that displays shows using [Tv Maze API](https://www.tvmaze.com/api).
+
+You can download the apk in [dist](./dist) folder!
 
 ## Getting Started
 This app was developed using Flutter, you can setup your environment using [this link](https://docs.flutter.dev/get-started/install).
