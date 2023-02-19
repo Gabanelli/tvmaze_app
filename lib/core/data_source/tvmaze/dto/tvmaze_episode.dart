@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:tvmaze_app/core/data_source/tvmaze/dto/tvmaze_show.dart';
 import 'package:tvmaze_app/modules/shows/shared/model/episode.dart';
 
 part 'tvmaze_episode.g.dart';
@@ -11,9 +12,8 @@ class TvMazeEpisode extends Episode {
     super.number,
     super.season,
     super.summary,
-    super.imageUrl,
+    super.image,
   );
 
-  factory TvMazeEpisode.fromJson(Map<String, dynamic> json) =>
-      _$TvMazeEpisodeFromJson(json);
+  factory TvMazeEpisode.fromJson(dynamic json) => _$TvMazeEpisodeFromJson(json);
 }

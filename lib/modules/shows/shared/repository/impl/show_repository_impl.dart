@@ -1,6 +1,7 @@
 import 'package:tvmaze_app/core/data_source/local_storage/local_storage_service.dart';
 import 'package:tvmaze_app/core/data_source/tvmaze/dto/tvmaze_show.dart';
 import 'package:tvmaze_app/core/data_source/tvmaze/tvmaze_service.dart';
+import 'package:tvmaze_app/core/extensions/iterable_extensions.dart';
 import 'package:tvmaze_app/modules/shows/shared/model/show.dart';
 import 'package:tvmaze_app/modules/shows/shared/model/episode.dart';
 import 'package:tvmaze_app/core/failures/failures.dart';
@@ -14,14 +15,14 @@ class ShowRepositoryImpl implements ShowRepository {
   ShowRepositoryImpl(this._tvMazeService, this._localStorageService);
 
   @override
-  Future<Either<Failure, IList<Episode>>> getEpisodesFromShow(
+  Future<Either<Failure, Map<int, List<Episode>>>> getEpisodesFromShow(
       int showId) async {
     try {
       final response = await _tvMazeService.getEpisodesByShow(showId);
       if (response.hasError) {
         return Left(ApiFailure(response.toString()));
       }
-      return Right(ilist(response.body!));
+      return Right(response.body!.groupBy((episode) => episode.season));
     } catch (err) {
       return Left(InternalFailure(err.toString()));
     }

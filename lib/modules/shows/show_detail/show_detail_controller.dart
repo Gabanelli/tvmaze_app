@@ -3,6 +3,7 @@ import 'package:tvmaze_app/core/failures/failures.dart';
 import 'package:tvmaze_app/modules/shows/shared/model/episode.dart';
 import 'package:tvmaze_app/modules/shows/shared/model/show.dart';
 import 'package:tvmaze_app/modules/shows/shared/repository/show_repository.dart';
+import 'package:tvmaze_app/modules/shows/shows_router.dart';
 
 import '../../../core/routes/base_controller.dart';
 
@@ -11,17 +12,16 @@ class ShowDetailController extends BaseController {
 
   ShowDetailController(this._showRepository);
 
-  final show = Rxn<Show>();
-  final episodes = RxList<Episode>();
-  final page = 0.obs;
+  late final Show show;
+  final episodesBySeason = RxMap<int, List<Episode>>();
 
   void _getEpisodes() async {
     isLoading.value = true;
-    final showsEither = await _showRepository.getEpisodesFromShow(page.value);
-    showsEither.fold(
+    final episodesEither = await _showRepository.getEpisodesFromShow(show.id);
+    episodesEither.fold(
       setGenericFailure,
       (episodes) {
-        this.episodes.value = episodes.toList();
+        episodesBySeason.value = episodes;
         isLoading.value = false;
       },
     );
@@ -32,12 +32,15 @@ class ShowDetailController extends BaseController {
         'An error was ocurred, please check your connection and try again');
   }
 
+  void navigateToEpisodeDetail(Episode episode) =>
+      Get.toNamed(ShowsRoutes.episodeDetail, arguments: {'episode': episode});
+
   @override
   void onInit() {
-    show.value = Get.arguments['show'];
-    if (show.value == null) {
+    if (Get.arguments['show'] == null) {
       throw 'Show is a required argument to ShowDetailController';
     }
+    show = Get.arguments['show'];
     _getEpisodes();
     super.onInit();
   }

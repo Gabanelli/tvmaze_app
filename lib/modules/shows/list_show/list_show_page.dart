@@ -84,8 +84,12 @@ class ListShowPage extends GetView<ListShowController> {
                     crossAxisSpacing: 8,
                     mainAxisSpacing: 8,
                   ),
-                  children:
-                      controller.shows.map((show) => ShowView(show)).toList(),
+                  children: controller.shows
+                      .map((show) => ShowView(
+                            show,
+                            onTap: controller.navigateToDetails,
+                          ))
+                      .toList(),
                 ),
         );
     }
@@ -94,28 +98,34 @@ class ListShowPage extends GetView<ListShowController> {
 
 class ShowView extends StatelessWidget {
   final Show show;
+  final void Function(Show)? onTap;
+
   const ShowView(
     this.show, {
+    this.onTap,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        if (show.imageUrl != null)
-          Image.network(
-            show.imageUrl!,
-            height: 150,
+    return InkWell(
+      onTap: () => onTap != null ? onTap!(show) : null,
+      child: Column(
+        children: [
+          if (show.imageUrl != null)
+            Image.network(
+              show.imageUrl!,
+              height: 150,
+            ),
+          const SizedBox(height: 8),
+          Flexible(
+            child: Text(
+              show.name,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
-        const SizedBox(height: 8),
-        Flexible(
-          child: Text(
-            show.name,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

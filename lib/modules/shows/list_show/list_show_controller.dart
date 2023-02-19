@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:tvmaze_app/core/failures/failures.dart';
 import 'package:tvmaze_app/modules/shows/shared/model/show.dart';
 import 'package:tvmaze_app/modules/shows/shared/repository/show_repository.dart';
+import 'package:tvmaze_app/modules/shows/shows_router.dart';
 
 import '../../../core/routes/base_controller.dart';
 
@@ -51,6 +52,10 @@ class ListShowController extends BaseController {
       _getShows(() => _showRepository.searchShows(searchText.value!));
       isSearchMode.value = true;
     }
+  }
+
+  void navigateToDetails(Show show) {
+    Get.toNamed(ShowsRoutes.showDetail, arguments: {'show': show});
   }
 
   void clearSearch() {
