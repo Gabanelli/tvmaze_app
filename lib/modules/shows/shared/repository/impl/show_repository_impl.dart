@@ -40,6 +40,20 @@ class ShowRepositoryImpl implements ShowRepository {
     }
   }
 
+  @override
+  Future<Either<Failure, IList<Show>>> searchShows(String searchText) async {
+    try {
+      final response = await _tvMazeService.searchShows(searchText);
+      if (response.hasError) {
+        return Left(ApiFailure(response.toString()));
+      }
+      return Right(ilist(response.body!
+          .map((showSearch) => _parseDtoToModel(showSearch.show))));
+    } catch (err) {
+      return Left(InternalFailure(err.toString()));
+    }
+  }
+
   Show _parseDtoToModel(TvMazeShow tvMazeShow) => Show(
         tvMazeShow.id,
         tvMazeShow.name,

@@ -5,6 +5,7 @@ import 'package:tvmaze_app/modules/shows/shared/model/show.dart';
 
 abstract class ShowRepository {
   Future<Either<Failure, IList<Show>>> getShows(int page);
+  Future<Either<Failure, IList<Show>>> searchShows(String searchText);
   Future<Either<Failure, IList<Episode>>> getEpisodesFromShow(int showId);
   Future<Either<Failure, IList<Show>>> toggleFavoriteShow(
       IList<Show> shows, int showId);

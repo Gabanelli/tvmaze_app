@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tvmaze_app/modules/shows/list_show/list_show_controller.dart';
+import 'package:tvmaze_app/modules/shows/shared/model/show.dart';
 
 import '../../../core/routes/controller_status.dart';
 
@@ -12,22 +13,34 @@ class ListShowPage extends GetView<ListShowController> {
     return Scaffold(
       appBar: AppBar(title: const Text('List Shows')),
       body: SafeArea(
-        child: Obx(() => Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      const Flexible(
-                        child: TextField(),
+        child: Obx(
+          () => Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Flexible(
+                      child: TextField(
+                        controller: controller.searchTextController,
+                        onChanged: (text) => controller.searchText.value = text,
                       ),
+                    ),
+                    if (controller.isSearchMode.value)
                       IconButton(
-                          onPressed: () {}, icon: const Icon(Icons.search))
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  _buildList(),
-                  const SizedBox(height: 16),
+                        onPressed: controller.clearSearch,
+                        icon: const Icon(Icons.clear),
+                      ),
+                    IconButton(
+                      onPressed: controller.searchShows,
+                      icon: const Icon(Icons.search),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                _buildList(),
+                const SizedBox(height: 16),
+                if (!controller.isSearchMode.value)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -38,7 +51,7 @@ class ListShowPage extends GetView<ListShowController> {
                             : controller.previousPage,
                         disabledColor: Colors.grey,
                       ),
-                      Text(controller.page.value.toString()),
+                      Text((controller.page.value + 1).toString()),
                       IconButton(
                         icon: const Icon(Icons.skip_next),
                         onPressed: controller.shows.isEmpty
@@ -47,9 +60,10 @@ class ListShowPage extends GetView<ListShowController> {
                       ),
                     ],
                   ),
-                ],
-              ),
-            )),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -62,10 +76,46 @@ class ListShowPage extends GetView<ListShowController> {
         return Text(controller.errorMessage.value);
       case ControllerStatus.success:
         return Flexible(
-          child: ListView(
-            children: controller.shows.map((show) => Text(show.name)).toList(),
-          ),
+          child: controller.shows.isEmpty
+              ? const Text('No results')
+              : GridView(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                  ),
+                  children:
+                      controller.shows.map((show) => ShowView(show)).toList(),
+                ),
         );
     }
+  }
+}
+
+class ShowView extends StatelessWidget {
+  final Show show;
+  const ShowView(
+    this.show, {
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        if (show.imageUrl != null)
+          Image.network(
+            show.imageUrl!,
+            height: 150,
+          ),
+        const SizedBox(height: 8),
+        Flexible(
+          child: Text(
+            show.name,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
+    );
   }
 }
