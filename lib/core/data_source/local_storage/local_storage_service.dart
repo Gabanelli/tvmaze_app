@@ -1,5 +1,5 @@
 import 'package:get_storage/get_storage.dart';
-import 'package:tvmaze_app/core/services/local_storage/local_storage_keys.dart';
+import 'package:tvmaze_app/core/data_source/local_storage/local_storage_keys.dart';
 
 class LocalStorageService {
   final GetStorage _getStorage;

@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
-import 'package:tvmaze_app/core/controller/base_controller.dart';
 import 'package:tvmaze_app/core/failures/failures.dart';
 import 'package:tvmaze_app/modules/shows/shared/model/episode.dart';
 import 'package:tvmaze_app/modules/shows/shared/model/show.dart';
 import 'package:tvmaze_app/modules/shows/shared/repository/show_repository.dart';
+
+import '../../../core/routes/base_controller.dart';
 
 class ShowDetailController extends BaseController {
   final ShowRepository _showRepository;

@@ -1,6 +1,6 @@
-import 'package:tvmaze_app/core/services/local_storage/local_storage_service.dart';
-import 'package:tvmaze_app/core/services/tvmaze/dto/tvmaze_show.dart';
-import 'package:tvmaze_app/core/services/tvmaze/tvmaze_service.dart';
+import 'package:tvmaze_app/core/data_source/local_storage/local_storage_service.dart';
+import 'package:tvmaze_app/core/data_source/tvmaze/dto/tvmaze_show.dart';
+import 'package:tvmaze_app/core/data_source/tvmaze/tvmaze_service.dart';
 import 'package:tvmaze_app/modules/shows/shared/model/show.dart';
 import 'package:tvmaze_app/modules/shows/shared/model/episode.dart';
 import 'package:tvmaze_app/core/failures/failures.dart';
@@ -47,7 +47,7 @@ class ShowRepositoryImpl implements ShowRepository {
         tvMazeShow.premiered,
         tvMazeShow.ended,
         tvMazeShow.summary,
-        tvMazeShow.image.medium,
+        tvMazeShow.image?.medium,
         _localStorageService.getFavoriteIds().contains(tvMazeShow.id),
       );
 

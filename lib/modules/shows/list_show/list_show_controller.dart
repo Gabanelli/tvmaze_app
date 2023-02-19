@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
-import 'package:tvmaze_app/core/controller/base_controller.dart';
 import 'package:tvmaze_app/core/failures/failures.dart';
 import 'package:tvmaze_app/modules/shows/shared/model/show.dart';
 import 'package:tvmaze_app/modules/shows/shared/repository/show_repository.dart';
+
+import '../../../core/routes/base_controller.dart';
 
 class ListShowController extends BaseController {
   final ShowRepository _showRepository;
@@ -20,6 +21,7 @@ class ListShowController extends BaseController {
       (shows) {
         this.shows.value = shows.toList();
         isLoading.value = false;
+        hasError.value = false;
       },
     );
   }
@@ -33,6 +35,9 @@ class ListShowController extends BaseController {
     page.value = newPage;
     _getShows();
   }
+
+  void nextPage() => changePage(page.value + 1);
+  void previousPage() => changePage(page.value - 1);
 
   @override
   void onInit() {

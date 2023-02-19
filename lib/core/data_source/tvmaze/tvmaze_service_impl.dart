@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:tvmaze_app/core/services/tvmaze/tvmaze_config.dart';
-import 'package:tvmaze_app/core/services/tvmaze/tvmaze_service.dart';
+import 'package:tvmaze_app/core/data_source/tvmaze/tvmaze_config.dart';
+import 'package:tvmaze_app/core/data_source/tvmaze/tvmaze_service.dart';
 
 import 'dto/tvmaze_episode.dart';
 import 'dto/tvmaze_show.dart';
@@ -14,7 +14,9 @@ class TvMazeServiceImpl implements TvMazeService {
   Future<Response<List<TvMazeShow>>> getShows(int page) {
     return _getConnect.get<List<TvMazeShow>>(
       TvMazeConfig.shows,
-      query: {'page': page},
+      query: <String, String>{'page': page.toString()},
+      decoder: (jsonList) =>
+          jsonList.map<TvMazeShow>(TvMazeShow.fromJson).toList(),
     );
   }
 
@@ -22,6 +24,8 @@ class TvMazeServiceImpl implements TvMazeService {
   Future<Response<List<TvMazeEpisode>>> getEpisodesByShow(int showId) {
     return _getConnect.get<List<TvMazeEpisode>>(
       TvMazeConfig.episodes(showId),
+      decoder: (jsonList) =>
+          jsonList.map<TvMazeEpisode>(TvMazeEpisode.fromJson).toList(),
     );
   }
 }

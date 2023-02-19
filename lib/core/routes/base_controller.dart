@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
-import 'package:tvmaze_app/core/controller/controller_status.dart';
 import 'package:tvmaze_app/core/failures/failures.dart';
+
+import 'controller_status.dart';
 
 class BaseController extends GetxController {
   final isLoading = true.obs;
@@ -17,6 +18,7 @@ class BaseController extends GetxController {
     isLoading.value = false;
     hasError.value = true;
     errorMessage.value = message;
+    print(failure.toString());
     //TODO: Store errors
   }
 }
