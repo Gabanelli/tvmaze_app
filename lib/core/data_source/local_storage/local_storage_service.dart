@@ -7,8 +7,7 @@ class LocalStorageService {
   const LocalStorageService(this._getStorage);
 
   Set<int> getFavoriteIds() {
-    final ids =
-        _getStorage.read<List<int>>(LocalStorageKey.favoriteShowIds.name);
+    final ids = _getStorage.read<List>(LocalStorageKey.favoriteShowIds.name);
     return ids != null ? Set.from(ids) : {};
   }
 

@@ -59,21 +59,16 @@ class ShowRepositoryImpl implements ShowRepository {
   }
 
   @override
-  Future<Either<Failure, IList<Show>>> toggleFavoriteShow(
-      IList<Show> shows, int showId) async {
+  Future<Either<Failure, Show>> toggleFavoriteShow(Show show) async {
     try {
       final ids = _localStorageService.getFavoriteIds();
-      if (ids.contains(showId)) {
-        ids.remove(showId);
+      if (ids.contains(show.id)) {
+        ids.remove(show.id);
       } else {
-        ids.add(showId);
+        ids.add(show.id);
       }
       await _localStorageService.setFavoriteIds(ids);
-      return Right(shows.map(
-        (show) => show.id == showId
-            ? show.copyWith(isFavorite: ids.contains(showId))
-            : show,
-      ));
+      return Right(show.copyWith(isFavorite: ids.contains(show.id)));
     } catch (err) {
       return Left(InternalFailure(err.toString()));
     }

@@ -41,7 +41,7 @@ void main() {
       final controller = ShowDetailController(mockShowRepository);
       controller.onInit();
 
-      expect(controller.show, _showMock);
+      expect(controller.show.value, _showMock);
       expect(controller.isLoading.value, true);
       expect(controller.status, ControllerStatus.loading);
       await Future.delayed(Duration.zero);
@@ -58,7 +58,7 @@ void main() {
       final controller = ShowDetailController(mockShowRepository);
       controller.onInit();
 
-      expect(controller.show, _showMock);
+      expect(controller.show.value, _showMock);
       expect(controller.isLoading.value, true);
       expect(controller.status, ControllerStatus.loading);
       await Future.delayed(Duration.zero);

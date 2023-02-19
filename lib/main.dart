@@ -17,15 +17,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       getPages: AppPages.pages,
-      title: 'Flutter Demo',
+      title: 'TV Maze App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
       home: Scaffold(
         appBar: AppBar(title: const Text('TV Maze App')),
         body: Column(
           children: [
             ListTile(
+              leading: const Icon(Icons.movie),
               title: const Text('Shows List'),
               onTap: () => Get.toNamed(ShowsRoutes.listShow),
             ),

@@ -8,6 +8,5 @@ abstract class ShowRepository {
   Future<Either<Failure, IList<Show>>> searchShows(String searchText);
   Future<Either<Failure, Map<int, List<Episode>>>> getEpisodesFromShow(
       int showId);
-  Future<Either<Failure, IList<Show>>> toggleFavoriteShow(
-      IList<Show> shows, int showId);
+  Future<Either<Failure, Show>> toggleFavoriteShow(Show show);
 }

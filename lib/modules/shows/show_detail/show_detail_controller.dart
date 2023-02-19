@@ -12,12 +12,14 @@ class ShowDetailController extends BaseController {
 
   ShowDetailController(this._showRepository);
 
-  late final Show show;
+  final show = Rx<Show>(Get.arguments['show']);
   final episodesBySeason = RxMap<int, List<Episode>>();
+  bool hasChanges = false;
 
   void _getEpisodes() async {
     isLoading.value = true;
-    final episodesEither = await _showRepository.getEpisodesFromShow(show.id);
+    final episodesEither =
+        await _showRepository.getEpisodesFromShow(show.value.id);
     episodesEither.fold(
       setGenericFailure,
       (episodes) {
@@ -32,15 +34,20 @@ class ShowDetailController extends BaseController {
         'An error was ocurred, please check your connection and try again');
   }
 
+  void toggleShowFavorite() async {
+    final toggleFavoriteEither =
+        await _showRepository.toggleFavoriteShow(show.value);
+    toggleFavoriteEither.fold(setGenericFailure, (show) {
+      this.show.value = show;
+      hasChanges = true;
+    });
+  }
+
   void navigateToEpisodeDetail(Episode episode) =>
       Get.toNamed(ShowsRoutes.episodeDetail, arguments: {'episode': episode});
 
   @override
   void onInit() {
-    if (Get.arguments['show'] == null) {
-      throw 'Show is a required argument to ShowDetailController';
-    }
-    show = Get.arguments['show'];
     _getEpisodes();
     super.onInit();
   }

@@ -22,15 +22,21 @@ class ListShowController extends BaseController {
   final searchText = Rxn<String>();
   final isSearchMode = false.obs;
 
-  void _getShows(_GetShowStrategy getShowStrategy) async {
+  _GetShowStrategy get _getShowsStrategy =>
+      searchText.value != null && searchText.value!.isNotEmpty
+          ? () => _showRepository.searchShows(searchText.value!)
+          : () => _showRepository.getShows(page.value);
+
+  void _getShows() async {
     isLoading.value = true;
-    final showsEither = await getShowStrategy();
+    final showsEither = await _getShowsStrategy();
     showsEither.fold(
       setGenericFailure,
       (shows) {
         this.shows.value = shows.toList();
         isLoading.value = false;
         hasError.value = false;
+        setIsSearchMode();
       },
     );
   }
@@ -42,33 +48,39 @@ class ListShowController extends BaseController {
 
   void changePage(int newPage) {
     page.value = newPage;
-    _getShows(() => _showRepository.getShows(page.value));
+    _getShows();
   }
 
   void nextPage() => changePage(page.value + 1);
   void previousPage() => changePage(page.value - 1);
   void searchShows() {
     if (searchText.value != null && searchText.value!.isNotEmpty) {
-      _getShows(() => _showRepository.searchShows(searchText.value!));
-      isSearchMode.value = true;
+      _getShows();
     }
   }
 
-  void navigateToDetails(Show show) {
-    Get.toNamed(ShowsRoutes.showDetail, arguments: {'show': show});
+  void navigateToDetails(Show show) async {
+    final shouldRefresh =
+        await Get.toNamed(ShowsRoutes.showDetail, arguments: {'show': show});
+    if (shouldRefresh ?? true) {
+      _getShows();
+    }
   }
 
   void clearSearch() {
-    _getShows(() => _showRepository.getShows(page.value));
     searchText.value = null;
     searchTextController.clear();
-    isSearchMode.value = false;
+    _getShows();
   }
 
   @override
   void onInit() {
-    _getShows(() => _showRepository.getShows(page.value));
-    isSearchMode.value = false;
+    _getShows();
     super.onInit();
+  }
+
+  void setIsSearchMode() {
+    isSearchMode.value =
+        searchText.value != null && searchText.value!.isNotEmpty;
   }
 }

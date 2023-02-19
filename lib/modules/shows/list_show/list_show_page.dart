@@ -115,20 +115,33 @@ class ShowView extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => onTap != null ? onTap!(show) : null,
-      child: Column(
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          if (show.imageUrl != null)
-            Image.network(
-              show.imageUrl!,
-              height: 150,
-            ),
-          const SizedBox(height: 8),
-          Flexible(
-            child: Text(
-              show.name,
-              overflow: TextOverflow.ellipsis,
-            ),
+          Column(
+            children: [
+              if (show.imageUrl != null)
+                Image.network(
+                  show.imageUrl!,
+                  height: 150,
+                ),
+              const SizedBox(height: 8),
+              Flexible(
+                child: Text(
+                  show.name,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
           ),
+          if (show.isFavorite)
+            const Align(
+              alignment: Alignment.topRight,
+              child: Icon(
+                Icons.favorite,
+                color: Colors.green,
+              ),
+            ),
         ],
       ),
     );
