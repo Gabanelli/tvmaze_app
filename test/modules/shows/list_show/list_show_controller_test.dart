@@ -7,6 +7,7 @@ import 'package:tvmaze_app/core/routes/base_controller.dart';
 import 'package:tvmaze_app/core/routes/controller_status.dart';
 import 'package:tvmaze_app/modules/shows/list_show/list_show_controller.dart';
 import 'package:tvmaze_app/modules/shows/shared/model/show.dart';
+import 'package:tvmaze_app/modules/shows/shared/model/show_schedule.dart';
 import 'package:tvmaze_app/modules/shows/shared/repository/show_repository.dart';
 
 import 'list_show_controller_test.mocks.dart';
@@ -86,7 +87,8 @@ final _showsMock = [
     DateTime(2012, 4, 15),
     DateTime(2017, 4, 16),
     '<p>This Emmy winning series is a comic look at the assorted humiliations and rare triumphs of a group of girls in their 20s.</p>',
-    'https://static.tvmaze.com/uploads/images/medium_portrait/31/78286.jpg","original":"https://static.tvmaze.com/uploads/images/original_untouched/31/78286.jpg',
+    'https://static.tvmaze.com/uploads/images/medium_portrait/31/78286.jpg',
+    const ShowSchedule('00:00', ['Sunday']),
     false,
   )
 ];

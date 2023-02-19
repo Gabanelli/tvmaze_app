@@ -3,11 +3,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:tvmaze_app/core/data_source/tvmaze/dto/tvmaze_show.dart';
 import 'package:tvmaze_app/core/failures/failures.dart';
 import 'package:tvmaze_app/core/routes/base_controller.dart';
 import 'package:tvmaze_app/core/routes/controller_status.dart';
 import 'package:tvmaze_app/modules/shows/shared/model/episode.dart';
 import 'package:tvmaze_app/modules/shows/shared/model/show.dart';
+import 'package:tvmaze_app/modules/shows/shared/model/show_schedule.dart';
 import 'package:tvmaze_app/modules/shows/shared/repository/show_repository.dart';
 import 'package:tvmaze_app/modules/shows/show_detail/show_detail_controller.dart';
 
@@ -35,7 +37,7 @@ void main() {
   group('ShowDetailController onInit', () {
     test('should fill shows list when request is successfully', () async {
       when(mockShowRepository.getEpisodesFromShow(any))
-          .thenAnswer((_) async => Right(ilist(_episodesMock)));
+          .thenAnswer((_) async => Right(_episodesMock));
 
       final controller = ShowDetailController(mockShowRepository);
       controller.onInit();
@@ -48,7 +50,7 @@ void main() {
       expect(controller.isLoading.value, false);
       expect(controller.hasError.value, false);
       expect(controller.status, ControllerStatus.success);
-      expect(controller.episodes.length, 1);
+      expect(controller.episodesBySeason.length, 1);
     });
     test('should set as error, with a message, when request fail', () async {
       when(mockShowRepository.getEpisodesFromShow(any))
@@ -78,16 +80,21 @@ final _showMock = Show(
   DateTime(2017, 4, 16),
   '<p>This Emmy winning series is a comic look at the assorted humiliations and rare triumphs of a group of girls in their 20s.</p>',
   'https://static.tvmaze.com/uploads/images/medium_portrait/31/78286.jpg',
+  const ShowSchedule('00:00', ['Sunday']),
   false,
 );
 
-final _episodesMock = [
-  const Episode(
-    1,
-    'Pilot',
-    1,
-    1,
-    'The first episode',
-    'https://static.tvmaze.com/uploads/images/original_untouched/31/78286.jpg',
-  )
-];
+final _episodesMock = {
+  1: [
+    const Episode(
+      1,
+      'Pilot',
+      1,
+      1,
+      'The first episode',
+      TvMazeShowImage(
+          'https://static.tvmaze.com/uploads/images/original_untouched/31/78286.jpg',
+          null),
+    ),
+  ],
+};
