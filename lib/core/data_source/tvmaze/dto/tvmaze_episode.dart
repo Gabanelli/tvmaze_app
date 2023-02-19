@@ -1,18 +1,25 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:tvmaze_app/core/data_source/tvmaze/dto/tvmaze_show.dart';
-import 'package:tvmaze_app/modules/shows/shared/model/episode.dart';
+
+import 'tvmaze_image.dart';
 
 part 'tvmaze_episode.g.dart';
 
 @JsonSerializable()
-class TvMazeEpisode extends Episode {
+class TvMazeEpisode {
+  final int id;
+  final String name;
+  final int number;
+  final int season;
+  final String? summary;
+  final TvMazeImage image;
+
   const TvMazeEpisode(
-    super.id,
-    super.name,
-    super.number,
-    super.season,
-    super.summary,
-    super.image,
+    this.id,
+    this.name,
+    this.number,
+    this.season,
+    this.summary,
+    this.image,
   );
 
   factory TvMazeEpisode.fromJson(dynamic json) => _$TvMazeEpisodeFromJson(json);

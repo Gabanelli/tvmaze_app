@@ -1,6 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:tvmaze_app/modules/shows/shared/model/show_schedule.dart';
 
+import 'tvmaze_image.dart';
+
 part 'tvmaze_show.g.dart';
 
 @JsonSerializable()
@@ -12,7 +14,7 @@ class TvMazeShow {
   final DateTime? ended;
   final String? summary;
   final TvMazeShowSchedule schedule;
-  final TvMazeShowImage? image;
+  final TvMazeImage? image;
 
   const TvMazeShow(
     this.id,
@@ -26,17 +28,6 @@ class TvMazeShow {
   );
 
   factory TvMazeShow.fromJson(dynamic json) => _$TvMazeShowFromJson(json);
-}
-
-@JsonSerializable()
-class TvMazeShowImage {
-  final String? medium;
-  final String? original;
-
-  const TvMazeShowImage(this.medium, this.original);
-
-  factory TvMazeShowImage.fromJson(Map<String, dynamic> json) =>
-      _$TvMazeShowImageFromJson(json);
 }
 
 @JsonSerializable()

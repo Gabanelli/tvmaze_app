@@ -21,10 +21,10 @@ class EpisodeDetailPage extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
-                if (episode.image?.medium != null)
+                if (episode.image != null)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Image.network(episode.image!.medium!),
+                    child: Image.network(episode.image!),
                   ),
                 Text('${episode.name} - S${episode.season}E${episode.number}'),
                 episode.summary == null

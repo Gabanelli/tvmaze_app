@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:tvmaze_app/core/data_source/tvmaze/dto/tvmaze_show.dart';
 import 'package:tvmaze_app/core/failures/failures.dart';
 import 'package:tvmaze_app/core/routes/base_controller.dart';
 import 'package:tvmaze_app/core/routes/controller_status.dart';
@@ -92,9 +91,7 @@ final _episodesMock = {
       1,
       1,
       'The first episode',
-      TvMazeShowImage(
-          'https://static.tvmaze.com/uploads/images/original_untouched/31/78286.jpg',
-          null),
+      'https://static.tvmaze.com/uploads/images/original_untouched/31/78286.jpg',
     ),
   ],
 };

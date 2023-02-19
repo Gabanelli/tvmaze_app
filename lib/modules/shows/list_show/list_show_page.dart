@@ -11,7 +11,7 @@ class ListShowPage extends GetView<ListShowController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('List Shows')),
+      appBar: AppBar(title: const Text('Shows List')),
       body: SafeArea(
         child: Obx(
           () => Padding(
@@ -71,7 +71,12 @@ class ListShowPage extends GetView<ListShowController> {
   Widget _buildList() {
     switch (controller.status) {
       case ControllerStatus.loading:
-        return const CircularProgressIndicator();
+        return Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [CircularProgressIndicator()],
+          ),
+        );
       case ControllerStatus.error:
         return Text(controller.errorMessage.value);
       case ControllerStatus.success:

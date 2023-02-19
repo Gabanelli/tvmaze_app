@@ -11,7 +11,7 @@ class ShowDetailPage extends GetView<ShowDetailController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Show details')),
+      appBar: AppBar(title: const Text('Show Details')),
       body: Obx(
         () => SafeArea(
           child: Padding(

@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         body: Column(
           children: [
             ListTile(
-              title: const Text('Shows list'),
+              title: const Text('Shows List'),
               onTap: () => Get.toNamed(ShowsRoutes.listShow),
             ),
           ],

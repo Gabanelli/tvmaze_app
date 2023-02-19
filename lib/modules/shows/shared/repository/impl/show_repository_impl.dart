@@ -1,4 +1,5 @@
 import 'package:tvmaze_app/core/data_source/local_storage/local_storage_service.dart';
+import 'package:tvmaze_app/core/data_source/tvmaze/dto/tvmaze_episode.dart';
 import 'package:tvmaze_app/core/data_source/tvmaze/dto/tvmaze_show.dart';
 import 'package:tvmaze_app/core/data_source/tvmaze/tvmaze_service.dart';
 import 'package:tvmaze_app/core/extensions/iterable_extensions.dart';
@@ -22,7 +23,9 @@ class ShowRepositoryImpl implements ShowRepository {
       if (response.hasError) {
         return Left(ApiFailure(response.toString()));
       }
-      return Right(response.body!.groupBy((episode) => episode.season));
+      return Right(response.body!
+          .map(_parseEpisodeDtoToModel)
+          .groupBy((episode) => episode.season));
     } catch (err) {
       return Left(InternalFailure(err.toString()));
     }
@@ -35,7 +38,7 @@ class ShowRepositoryImpl implements ShowRepository {
       if (response.hasError) {
         return Left(ApiFailure(response.toString()));
       }
-      return Right(ilist(response.body!.map(_parseDtoToModel)));
+      return Right(ilist(response.body!.map(_parseShowDtoToModel)));
     } catch (err) {
       return Left(InternalFailure(err.toString()));
     }
@@ -49,23 +52,11 @@ class ShowRepositoryImpl implements ShowRepository {
         return Left(ApiFailure(response.toString()));
       }
       return Right(ilist(response.body!
-          .map((showSearch) => _parseDtoToModel(showSearch.show))));
+          .map((showSearch) => _parseShowDtoToModel(showSearch.show))));
     } catch (err) {
       return Left(InternalFailure(err.toString()));
     }
   }
-
-  Show _parseDtoToModel(TvMazeShow tvMazeShow) => Show(
-        tvMazeShow.id,
-        tvMazeShow.name,
-        tvMazeShow.genres,
-        tvMazeShow.premiered,
-        tvMazeShow.ended,
-        tvMazeShow.summary,
-        tvMazeShow.image?.medium,
-        tvMazeShow.schedule,
-        _localStorageService.getFavoriteIds().contains(tvMazeShow.id),
-      );
 
   @override
   Future<Either<Failure, IList<Show>>> toggleFavoriteShow(
@@ -87,4 +78,25 @@ class ShowRepositoryImpl implements ShowRepository {
       return Left(InternalFailure(err.toString()));
     }
   }
+
+  Show _parseShowDtoToModel(TvMazeShow tvMazeShow) => Show(
+        tvMazeShow.id,
+        tvMazeShow.name,
+        tvMazeShow.genres,
+        tvMazeShow.premiered,
+        tvMazeShow.ended,
+        tvMazeShow.summary,
+        tvMazeShow.image?.medium,
+        tvMazeShow.schedule,
+        _localStorageService.getFavoriteIds().contains(tvMazeShow.id),
+      );
+
+  Episode _parseEpisodeDtoToModel(TvMazeEpisode tvMazeEpisode) => Episode(
+        tvMazeEpisode.id,
+        tvMazeEpisode.name,
+        tvMazeEpisode.number,
+        tvMazeEpisode.season,
+        tvMazeEpisode.summary,
+        tvMazeEpisode.image.medium,
+      );
 }
