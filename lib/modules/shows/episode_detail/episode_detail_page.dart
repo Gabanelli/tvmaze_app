@@ -18,16 +18,20 @@ class EpisodeDetailPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              if (episode.image?.medium != null)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: Image.network(episode.image!.medium!),
-                ),
-              Text('${episode.name} - S${episode.season}E${episode.number}'),
-              Html(data: episode.summary),
-            ],
+          child: Center(
+            child: Column(
+              children: [
+                if (episode.image?.medium != null)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Image.network(episode.image!.medium!),
+                  ),
+                Text('${episode.name} - S${episode.season}E${episode.number}'),
+                episode.summary == null
+                    ? const Text('No summary provided')
+                    : Html(data: episode.summary),
+              ],
+            ),
           ),
         ),
       ),

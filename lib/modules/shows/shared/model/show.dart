@@ -1,3 +1,5 @@
+import 'package:tvmaze_app/modules/shows/shared/model/show_schedule.dart';
+
 class Show {
   final int id;
   final String name;
@@ -6,6 +8,7 @@ class Show {
   final DateTime? ended;
   final String? summary;
   final String? imageUrl;
+  final ShowSchedule schedule;
   final bool isFavorite;
 
   const Show(
@@ -16,6 +19,7 @@ class Show {
     this.ended,
     this.summary,
     this.imageUrl,
+    this.schedule,
     this.isFavorite,
   );
 
@@ -27,6 +31,7 @@ class Show {
     DateTime? ended,
     String? summary,
     String? imageUrl,
+    ShowSchedule? schedule,
     bool? isFavorite,
   }) =>
       Show(
@@ -37,6 +42,7 @@ class Show {
         ended ?? this.ended,
         summary ?? this.summary,
         imageUrl ?? this.imageUrl,
+        schedule ?? this.schedule,
         isFavorite ?? this.isFavorite,
       );
 }

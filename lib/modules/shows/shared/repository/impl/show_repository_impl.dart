@@ -63,6 +63,7 @@ class ShowRepositoryImpl implements ShowRepository {
         tvMazeShow.ended,
         tvMazeShow.summary,
         tvMazeShow.image?.medium,
+        tvMazeShow.schedule,
         _localStorageService.getFavoriteIds().contains(tvMazeShow.id),
       );
 

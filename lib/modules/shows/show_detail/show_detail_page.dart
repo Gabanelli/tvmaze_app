@@ -27,7 +27,11 @@ class ShowDetailPage extends GetView<ShowDetailController> {
                     ),
                   Text(controller.show.name),
                   Text('Genres: $_genresText'),
-                  Html(data: controller.show.summary),
+                  Text(
+                      '${controller.show.schedule.days.join(", ")} at ${controller.show.schedule.time}'),
+                  controller.show.summary == null
+                      ? const Text('No summary provided')
+                      : Html(data: controller.show.summary),
                   ...controller.episodesBySeason.entries.map((season) {
                     return Column(
                       children: [
